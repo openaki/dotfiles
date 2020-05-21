@@ -41,6 +41,7 @@ This function should only modify configuration layer settings."
          go-use-golangci-lint t
          godoc-at-point-function 'godoc-gogetdoc
          )
+     themes-megapack
      php
      sql
      html
@@ -57,14 +58,30 @@ This function should only modify configuration layer settings."
      git
      markdown
      org
+     org-roam
      ocaml
      octave
      treemacs
      common-lisp
      semantic
-     lsp
+
+     (lsp :variables
+          ;;lsp-ui-doc-enable nil
+          ;;lsp-ui-sideline-show-hover nil
+          lsp-rust-server 'rust-analyzer
+          lsp-rust-analyzer-server-display-inlay-hints t
+          )
      ess
      fsharp
+     (c-c++ :variables
+            c-c++-default-mode-for-headers 'c++-mode
+            c-c++-enable-google-style nil
+            ;;c-c++-enable-auto-newline t
+            c-c++-adopt-subprojects t
+            ;;c-c++-enable-clang-support t
+            c-c++-backend 'lsp-clangd
+            )
+
      (rust :variables
            rust-backend 'lsp
            rust-format-on-save t
@@ -387,7 +404,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil `smartparens-strict-mode' will be enabled in programming modes.
    ;; (default nil)
-   dotspacemacs-smartparens-strict-mode t
+   dotspacemacs-smartparens-strict-mode 'nil
 
    ;; If non-nil pressing the closing parenthesis `)' key in insert mode passes
    ;; over any automatically added closing parenthesis, bracket, quote, etc…
@@ -471,6 +488,14 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
+  (setq projectile-git-command "/usr/bin/fd . -0")
+  (setq helm-gtags-cache-select-result t)
+  (setq helm-gtags-maximum-candidates 100)
+  (setq helm-gtags-auto-update t)
+  (setq helm-gtags-use-input-at-cursor t)
+
+  (setq org-roam-completion-system 'helm) 
+
   )
 
 (defun dotspacemacs/user-load ()
@@ -487,9 +512,52 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
   (setq evil-want-fine-undo t) 
-  (spacemacs/toggle-evil-safe-lisp-structural-editing-on-register-hooks)
+  ;;(spacemacs/toggle-evil-safe-lisp-structural-editing-on-register-hooks)
   (setq clojure-enable-fancify-symbols t)
   (spacemacs/set-leader-keys "SPC" 'helm-projectile-find-file)  
+  (setq company-idle-delay 0.5)
+
+  (setq projectile-git-command "/usr/bin/fd . -0")
+  (setq shell-file-name "/bin/bash")
+  (spacemacs/set-leader-keys "SPC" 'helm-projectile-find-file)
+  (setq dotspacemacs-command-key ":")
+  (setq inferior-lisp-program "sbcl --dynamic-space-size 4096")
+  (setq clojure-enable-fancify-symbols t)
+  (evil-ex-define-cmd "W" "write")
+  (evil-ex-define-cmd "Wall" 'evil-write-all)
+  (evil-ex-define-cmd "A" 'projectile-find-other-file)
+
+  ;;;; use helm-ag with follow in place of swoop
+  (require 'helm-ag)
+
+  (spacemacs/set-leader-keys "sb" 'helm-do-ag-buffers )
+  (spacemacs/set-leader-keys "sB" 'spacemacs/helm-buffers-do-ag-region-or-symbol)                                                           
+  (spacemacs/set-leader-keys "ss" 'helm-do-ag-this-file)
+  (spacemacs/set-leader-keys "sS" 'spacemacs/helm-file-do-ag-region-or-symbol)
+  (spacemacs/set-leader-keys "bb" 'helm-projectile-switch-to-buffer)
+
+  (eval-after-load "helm" '(define-key helm-map (kbd "C-s") 'ace-jump-helm-line))
+  (eval-after-load "helm" '(define-key helm-map (kbd "C-j") 'helm-next-line))
+  (eval-after-load "helm" '(define-key helm-map (kbd "C-k") 'helm-previous-line))
+
+
+  ;; Rebind surround to S instead of s, so we can use s for avy
+  (evil-define-key 'operator evil-surround-mode-map "S" 'evil-surround-edit)
+  (evil-define-key 'visual evil-surround-mode-map "S" 'evil-surround-region)
+
+  ;; avy setup
+  (evil-define-key '(normal motion) global-map "s" 'avy-goto-char-timer)
+  (evil-define-key '(visual operator) evil-surround-mode-map "s" 'avy-goto-char-timer)
+  (setq avy-timeout-seconds 0.35)
+  (setq avy-all-windows 'all-frames)
+
+  ;;(ranger-override-dired-mode t)
+  ;; Projectile
+  (setq projectile-enable-caching t)
+
+  (setq-local imenu-create-index-function #'ggtags-build-imenu-index)
+  (evil-define-key '(normal insert) global-map (kbd "C-t") 'helm-gtags-pop-stack)
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will

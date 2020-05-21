@@ -70,16 +70,17 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git vi-mode)
+plugins=(git z vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 zstyle ':completion:*' file-sort date
 export TERM=screen-256color
 
-# export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git/*"'
-# source /home/akshat/temp/fzf/shell/completion.zsh
-# source /home/akshat/temp/fzf/shell/key-bindings.zsh
+export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git/*"'
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
 
 # User configuration
 
 alias vi=vim
+export PATH=/home/akshat/.cargo/bin:$PATH
