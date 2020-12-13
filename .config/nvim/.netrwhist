@@ -1,0 +1,8 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =6
+let g:netrw_dirhist_6='/home/akshat/code/rust/aoc-2020-rs-temp/examples'
+let g:netrw_dirhist_5='/home/akshat/go/src/github.com/openaki/aoc-2020/ex3'
+let g:netrw_dirhist_4='/home/akshat/go/src/github.com/openaki/aoc-2020'
+let g:netrw_dirhist_3='/home/akshat/code/common-lisp/raylib-test'
+let g:netrw_dirhist_2='/home/akshat'
+let g:netrw_dirhist_1='/home/akshat/code/common-lisp/raylib-test'
