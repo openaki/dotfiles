@@ -59,6 +59,8 @@
 (evil-ex-define-cmd "A" 'projectile-find-other-file)
 
 
+(setq doom-localleader-key ",")
+
 
 (after! rust-mode
   (setq auto-mode-alist (rassq-delete-all 'rust-mode auto-mode-alist)))
