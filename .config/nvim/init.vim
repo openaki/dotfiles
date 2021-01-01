@@ -27,7 +27,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'vim-scripts/a.vim'
 
 Plug 'rust-lang/rust.vim'
-Plug 'alaviss/nim.nvim'
+"Plug 'alaviss/nim.nvim'
 call plug#end()
 
 " -------------------------------------------------------------------------------------------------
@@ -242,6 +242,10 @@ nmap <leader>wd :wincmd q<CR>
 nmap <leader>wm :only<CR>
 
 
+
+autocmd TermOpen * if &buftype ==# 'terminal'|nnoremap <buffer>q :q<CR>|endif
+
+
 " language related bindings .. all start with <leader>l
 
 au FileType go nmap <silent> <leader>lu  :<C-u>GoDocBrowser<cr>
@@ -249,7 +253,9 @@ autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
 autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
 autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
 
+au FileType rust nmap <leader>lt :w<CR> :<C-u>Ctest -- --nocapture<cr>
+au FileType rust nmap <leader>lc :w<CR> :<C-u>Cbuild --tests<cr>
 
-au FileType rust nmap <leader>lt :<C-u>Ctest -- --nocapture<cr>
-au FileType rust nmap <leader>lc :<C-u>Cbuild --tests<cr>
+
+
 

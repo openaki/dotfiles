@@ -11,5 +11,6 @@
       "trace.server": "verbose"
     }
   },
-  "snippets.userSnippetsDirectory": "~/.config/nvim/snips"
+  "snippets.userSnippetsDirectory": "~/.config/nvim/snips",
+  "rust-analyzer.checkOnSave.extraArgs": [ "--target-dir", "/scratch/rust-analyser" ]
 }
