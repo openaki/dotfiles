@@ -27,7 +27,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'vim-scripts/a.vim'
 
 Plug 'rust-lang/rust.vim'
-"Plug 'alaviss/nim.nvim'
+Plug 'alaviss/nim.nvim'
 call plug#end()
 
 " -------------------------------------------------------------------------------------------------
@@ -253,7 +253,8 @@ autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
 autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
 autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
 
-au FileType rust nmap <leader>lt :w<CR> :<C-u>Ctest -- --nocapture<cr>
+au FileType rust nmap <leader>lt :w<CR> :<C-u>RustTest -- --nocapture<cr>
+au FileType rust nmap <leader>la :w<CR> :<C-u>Ctest -- --nocapture<cr>
 au FileType rust nmap <leader>lc :w<CR> :<C-u>Cbuild --tests<cr>
 
 
