@@ -27,7 +27,10 @@ Plug 'junegunn/fzf.vim'
 Plug 'vim-scripts/a.vim'
 
 Plug 'rust-lang/rust.vim'
-Plug 'alaviss/nim.nvim'
+"Plug 'alaviss/nim.nvim'
+"Plug 'dense-analysis/ale'
+Plug 'vimwiki/vimwiki'
+
 call plug#end()
 
 " -------------------------------------------------------------------------------------------------
@@ -66,7 +69,7 @@ set softtabstop=4
 set shiftwidth=4 "number of spaces to use for each auto indent
 set wildmenu
 set wildmode=list:longest,full
-
+set inccommand=nosplit
 
 "set cc=100 "draw bar down column 100
 
@@ -235,7 +238,6 @@ nmap <leader>wv :wincmd v<CR> :wincmd l<CR>
 nmap <leader>ws :wincmd s<CR> :wincmd j<CR>
 nmap <leader>wq :wincmd q<CR>
 nmap <leader>wh :wincmd h<CR>
-nmap <leader>ww :Windows<CR>
 " (w)indow-(d)elete
 nmap <leader>wd :wincmd q<CR>
 " (w)indow-(m)aximize
@@ -259,4 +261,10 @@ au FileType rust nmap <leader>lc :w<CR> :<C-u>Cbuild --tests<cr>
 
 
 
+"let g:ale_linters = {'nim': ['nimcheck']}
+"let g:ale_linters_explicit = 1
+
+
+let g:vimwiki_list = [{'path': '~/Sync/vimwiki/', 'ext': '.txt'}]
+let g:vimwiki_create_link = 0
 

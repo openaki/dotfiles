@@ -1,0 +1,94 @@
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ','
+
+local fn = vim.fn
+local execute = vim.api.nvim_command
+
+local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
+if fn.empty(fn.glob(install_path)) > 0 then
+  execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
+end
+vim.cmd [[packadd packer.nvim]]
+vim.cmd 'autocmd BufWritePost plugins.lua PackerCompile' -- Auto compile when there are changes in plugins.lua
+
+require('packer').startup(function()
+    -- Packer can manage itself as an optional plugin
+    use {'wbthomason/packer.nvim', opt = true}
+    use {'tpope/vim-dispatch'}
+    use {'tpope/vim-fugitive'}
+    use {'tpope/vim-surround'}
+    use {'tpope/vim-commentary'}
+    use {'tpope/vim-rhubarb'}
+    use {'tpope/vim-unimpaired'}
+    use {'tpope/vim-vinegar'}
+    use {'tpope/vim-sleuth'}
+    use {'wellle/targets.vim'}
+    use {'phaazon/hop.nvim'}
+
+    -- Telescope
+    use {'nvim-lua/plenary.nvim'}
+    use {'nvim-lua/popup.nvim'}
+    use {'nvim-telescope/telescope.nvim'}
+    use {
+        'nvim-telescope/telescope-frecency.nvim',
+        requires = {'tami5/sql.nvim'},
+        config = function()
+            require('telescope').load_extension('frecency')
+        end
+    }
+    use {'nvim-telescope/telescope-symbols.nvim'}
+    use {'nvim-telescope/telescope-github.nvim'}
+    use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
+    use {"nvim-telescope/telescope-hop.nvim"}
+
+    -- LSP config
+    use {'neovim/nvim-lspconfig'}
+
+    -- Completion - use either one of this
+    use {'hrsh7th/nvim-compe'}
+    -- use { 'nvim-lua/completion-nvim' }
+
+
+    -- Better LSP experience
+    use {'tjdevries/astronauta.nvim'}
+    use {'glepnir/lspsaga.nvim'}
+    use {'onsails/lspkind-nvim'}
+    use {'sbdchd/neoformat'}
+    use {'ray-x/lsp_signature.nvim'}
+    use {'szw/vim-maximizer'}
+    use {'dyng/ctrlsf.vim'}
+    use {'dbeniamine/cheat.sh-vim'}
+    use {'pechorin/any-jump.vim'}
+    use {'kshenoy/vim-signature'}
+    use {'kevinhwang91/nvim-bqf'}
+
+
+    -- Debugging
+    use {'puremourning/vimspector'}
+    use {'nvim-telescope/telescope-vimspector.nvim'}
+
+    -- DAP
+    use {'mfussenegger/nvim-dap'}
+    use {'nvim-telescope/telescope-dap.nvim'}
+    use {'mfussenegger/nvim-dap-python'} -- Python
+    use {'theHamsta/nvim-dap-virtual-text'}
+    use {'rcarriga/nvim-dap-ui'}
+    use {'Pocco81/DAPInstall.nvim'}
+    use {'jbyuki/one-small-step-for-vimkind'}
+
+    -- Rust
+    use {'rust-lang/rust.vim'}
+    use {'simrat39/rust-tools.nvim'}
+
+    end)
+
+vim.api.nvim_exec([[
+    fun! TrimWhitespace()
+        let l:save = winsaveview()
+        keeppatterns %s/\s\+$//e
+        call winrestview(l:save)
+    endfun
+    autocmd FileType lua,go,rust,html,typescript,javascript,python autocmd BufWritePre <buffer> call TrimWhitespace()
+]], false)
+
+require("lang")
